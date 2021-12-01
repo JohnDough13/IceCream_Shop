@@ -25,7 +25,7 @@ public class IceCreamCar {
 
     double getProfit();
 
-    
+
 
 
 //    1.6 IceCreamCar /4
