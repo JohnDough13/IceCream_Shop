@@ -1,43 +1,84 @@
 package be.intecbrussel.sellers;
 
-import be.intecbrussel.application.Stock;
 import be.intecbrussel.eatables.Cone;
 import be.intecbrussel.eatables.IceRocket;
 import be.intecbrussel.eatables.Magnum;
 
-public class IceCreamCar {
+public class IceCreamCar implements IceCreamSeller{
+    private PriceList priceList;
+    private Stock stock;
+    private double profit = 0;
 
-    public PriceList priceList;
-    public Stock stock;
-    double profit;
+    public IceCreamCar(){
+        this(new PriceList(), new Stock());
+    }
 
-    public Cone orderCone(Cone.Flavor[]);
+    public IceCreamCar(PriceList priceList, Stock stock){
+        this.priceList = priceList;
+        this.stock = stock;
+    }
 
-    public Cone prepareCone (Cone.Flavor[]);
+    @Override
+    public Cone orderCone(Cone.Flavor[] flavor) throws NoMoreIceCreamException {
+        try {
+            prepareCone(flavor);
+            profit = profit + flavor.length * priceList.getBallPrice();
+            return new Cone(flavor);
+        } catch (NoMoreIceCreamException e){
+            throw new NoMoreIceCreamException();
+        }
+    }
 
-    public IceRocket orderIceRocket ();
+    private Cone prepareCone(Cone.Flavor[] flavor) throws NoMoreIceCreamException {
+        if (stock.getBalls() <= 0) throw new NoMoreIceCreamException();
+        else if (stock.getCones() <= 0) throw new NoMoreIceCreamException();
+        else {
+            stock.setCones(stock.getCones() - 1);
+            stock.setBalls(stock.getBalls() - flavor.length);
+            return new Cone(flavor);
+        }
+    }
 
-    public IceRocket prepareIceRocket ();
+    @Override
+    public IceRocket orderIceRocket() throws NoMoreIceCreamException {
+        try {
+            prepareIceRocket();
+            profit = profit + priceList.getRocketPrice();
+            return new IceRocket();
+        } catch (NoMoreIceCreamException e){
+            throw new NoMoreIceCreamException();
+        }
+    }
 
-    public Magnum orderMagnum(Magnum.MagnumType);
+    private IceRocket prepareIceRocket() throws NoMoreIceCreamException {
+        if (stock.getIceRockets() <= 0) throw new NoMoreIceCreamException();
+        else {
+            stock.setIceRockets(stock.getIceRockets() - 1);
+            return new IceRocket();
+        }
+    }
 
-    public Magnum prepareMagnum (Magnum.MagnumType);
+    @Override
+    public Magnum orderMagnum(Magnum.MagnumType type) throws NoMoreIceCreamException {
+        try {
+            prepareMagnum(type);
+            profit = profit + priceList.getMagnumPrice(type);
+            return new Magnum(type);
+        } catch (NoMoreIceCreamException e) {
+            throw new NoMoreIceCreamException();
+        }
+    }
 
-    double getProfit();
+    private Magnum prepareMagnum(Magnum.MagnumType type) throws NoMoreIceCreamException {
+        if (stock.getMagni() <= 0) throw new NoMoreIceCreamException();
+        else {
+            stock.setMagni(stock.getMagni() - 1);
+            return new Magnum(type);
+        }
+    }
 
-
-
-
-//    1.6 IceCreamCar /4
-//Zie het schema bij 1.3.
-//We gaan een 2e
-//soort icecreamseller definiëren, de icecreamcar. Deze zal een eindige voorraad ijsjes
-//hebben. Ze gaat dus gebruik maken van een stock.
-//Zorg dus ook dat je aan een constructor zowel een pricelist als een stock meegeven kan.
-//De orderMethoden zijn grotendeels hetzelfde als bij een IceCreamSalon, alleen dat je nu ook
-//rekening moet houden met de stock. Indien er van een bepaald ijsje geen voorraad meer is, gooi je
-//een NoMoreIceCreamException. Deze vang je dan eventueel later op in je programma. De
-//ordermethoden geven in ieder geval normaal gezien nooit een null waarde terug.
-//De prepareCone, prepareRocket en prepareMagnum methoden zijn private en dienen eerder als
-//hulpmethoden gebruikt te worden binnen je ordermethoden om het boeltje clean te houden.
+    @Override
+    public double getProfit() {
+        return profit;
+    }
 }

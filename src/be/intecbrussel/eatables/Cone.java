@@ -1,21 +1,37 @@
 package be.intecbrussel.eatables;
 
-public class Cone {
-    public enum Flavor[];
-   STRAWBERRY;
-   BANANA;
-   CHOCOLATE;
-   VANILLA;
-   LEMON;
-   STRACIATELLA;
-   MOKKA;
-   PISTACHE;
+import java.util.Arrays;
 
-   public cone ();
+public class Cone implements Eatable{
+   private Flavor[] balls;
+   public enum Flavor {
+      STRAWBERRY,
+      BANANA,
+      CHOCOLATE,
+      VANILLA,
+      LEMON,
+      STRACIATELLA,
+      MOKKA,
+      PISTACHE;
+   }
 
-public cone(Flavor[]);
+   public Cone(){
+      this(new Flavor[]{Flavor.PISTACHE});
+   }
 
-@Override
-   public void eat ();
+   public Cone(Flavor[] flavor){
+      balls = new Flavor[flavor.length];
+      for (int i = 0; i < flavor.length; i++){
+         balls[i] = flavor[i];
+      }
+   }
 
+   @Override
+   public void eat() {
+      StringBuilder stringBuilder = new StringBuilder("eating cone with:");
+      for (Flavor flavor : balls){
+         stringBuilder.append(flavor).append(" - ");
+      }
+      System.out.println(stringBuilder);
+   }
 }

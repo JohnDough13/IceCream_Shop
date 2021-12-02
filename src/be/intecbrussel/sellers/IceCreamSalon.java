@@ -4,37 +4,43 @@ import be.intecbrussel.eatables.Cone;
 import be.intecbrussel.eatables.IceRocket;
 import be.intecbrussel.eatables.Magnum;
 
+public class IceCreamSalon implements IceCreamSeller{
+    private PriceList priceList;
+    private double totalProfit = 0;
 
-//1.3 IceCreamSeller en het IceCreamSalon /6
+    public IceCreamSalon(){
+        this(new PriceList());
+    }
 
-//Dit schema past ook binnen de sellers package.
-//We starten met het maken van de interfaces en het IceCreamSalon. De IceCreamCar zullen we later
-//behandelen.
-//Een IceCreamSalon stelt een ijsjeszaak voor die een ongelimiteerd aantal ijsjes heeft die ze zelf
-//produceren. Je kan er ijsjes bestellen en je kan er de winst van opvragen. Ze implementeert immers
-//de IceCreamSeller interface.
-//Uitleg bij de implementatie van het IceCreamSalon:
-//- orderCone zal op basis van een array van flavors een nieuwe cone aanmaken en teruggeven.
-//Ook zal ze aan de hand van de pricelist de totalprofit waarde omhoog laten gaan.
-//- orderIceRocket zal een nieuwe icerocket aanmaken en teruggeven. Ook zal ze aan de hand
-//van de pricelist de totalprofit waarde omhoog laten gaan.
-//- orderMagnum zal op basis van een MagnumType een nieuwe Magnum aanmaken en
-//teruggeven. Ook zal ze aan de hand van de pricelist de totalprofit waarde omhoog laten
-//gaan.
-//Vergeet ook niet een constructor aan te maken waar je een PriceList aan kan meegeven
+    public IceCreamSalon(PriceList priceList) {
+        this.priceList = priceList;
+    }
 
-public class IceCreamSalon {
+    @Override
+    public double getProfit() {
+        return totalProfit;
+    }
 
-    public priceList (PriceList);
-    double totalProfit;
+    @Override
+    public Cone orderCone(Cone.Flavor[] flavor) {
+        totalProfit = totalProfit + flavor.length * priceList.getBallPrice();
+        return new Cone(flavor);
+    }
 
-    double getProfit ();
+    @Override
+    public IceRocket orderIceRocket() {
+        totalProfit = totalProfit + priceList.getRocketPrice();
+        return new IceRocket();
+    }
 
-    public Cone orderCone (Cone.Flavor[]);
+    @Override
+    public Magnum orderMagnum(Magnum.MagnumType type) {
+        totalProfit = totalProfit + priceList.getMagnumPrice(type);
+        return new Magnum(type);
+    }
 
-    public IceRocket orderIceRocket ();
-
-    public Magnum orderMagnumType (Magnum.MagnumType);
-
-    String toString ();
+    @Override
+    public String toString() {
+        return "profit of " + getProfit() + " euro";
+    }
 }

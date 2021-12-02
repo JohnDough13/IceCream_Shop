@@ -2,38 +2,55 @@ package be.intecbrussel.sellers;
 
 import be.intecbrussel.eatables.Magnum;
 
-
-//1.2 Prijslijst /2
-
-//Dit schema hoort bij de sellers package en zal de prijzen van de ijsjes bijhouden. De getmagnumprice
-//methode zal aan de hand van een gegeven MagnumType en een algemeen opgegeven
-//magnumStandardPrice teruggeven wat de prijs van zo’n magnum zal zijn. Bv: Een alpinenuts
-//magnum zal 1.5 keer de prijs zijn van een standaard magnum.
-
-
 public class PriceList {
+    private double ballPrice;
+    private double rocketPrice;
+    private double magnumStandardPrice;
 
-    double ballPrice;
+    public PriceList(){
+        this(1, 2, 3);
+    }
 
-    double rocketPrice;
+    public PriceList(double rocketPrice, double ballPrice, double magnumStandardPrice){
+        setRocketPrice(rocketPrice);
+        setBallPrice(ballPrice);
+        setMagnumStandardPrice(magnumStandardPrice);
+    }
 
-    double magnumStandardPrice;
+    public void setRocketPrice(double rocketPrice) {
+        this.rocketPrice = rocketPrice;
+    }
 
-    public PriceList ();
+    public void setBallPrice(double ballPrice) {
+        this.ballPrice = ballPrice;
+    }
 
-    public PriceList(double, double, double);
+    public void setMagnumStandardPrice(double magnumStandardPrice) {
+        this.magnumStandardPrice = magnumStandardPrice;
+    }
 
-    public void setBallPrice(double);
+    public double getRocketPrice() {
+        return rocketPrice;
+    }
 
-    public void setRocketPrice(double);
+    public double getBallPrice() {
+        return ballPrice;
+    }
 
-    public void setMagnumStandardPrice (double);
-
-    public double getBallPrice();
-
-    public double getRocketPrice();
-
-    public double getMagnumStandardPrice(Magnum.MagnumType);
-
-
+    public double getMagnumPrice(Magnum.MagnumType type) {
+        if (type == Magnum.MagnumType.MILKCHOCOLATE) {
+            return magnumStandardPrice * 5;
+        }
+        if (type == Magnum.MagnumType.WHITECHOCOLATE) {
+            return magnumStandardPrice * 4;
+        }
+        if (type == Magnum.MagnumType.BLACKCHOCOLATE) {
+            return magnumStandardPrice * 3;
+        }
+        if (type == Magnum.MagnumType.ALPINENUTS) {
+            return magnumStandardPrice * 2;
+        } else {
+            return magnumStandardPrice;
+        }
+    }
 }

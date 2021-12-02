@@ -1,26 +1,25 @@
 package be.intecbrussel.application;
 
+import be.intecbrussel.eatables.Cone;
+import be.intecbrussel.eatables.Eatable;
+import be.intecbrussel.eatables.IceRocket;
+import be.intecbrussel.eatables.Magnum;
 import be.intecbrussel.sellers.IceCreamSalon;
 import be.intecbrussel.sellers.IceCreamSeller;
 import be.intecbrussel.sellers.PriceList;
 
-
-//        1.4 Eerste applicatie /1
-//        Maak in je application package een klasse aan met een main methode. (bv: IceCreamApp)
-//        Maak een PriceList instantie aan.
-//                Maak een IceCreamSalon instantie aan met behulp van de pricelist en steek deze in een
-//        IceCreamSeller variabele.
-//        Bestel enkele ijsjes (order methoden), steek deze in een array van Eatable.
-//        Roep van deze ijsjes de eat methode aan.
-//        Aan het einde van je applicatie print je de profit af van de icecreamseller.
-
 public class IceCreamApp {
-
     public static void main(String[] args) {
-        PriceList;
-
-        IceCreamSalon + PriceList = IceCreamSeller;
-
-
+        PriceList priceList = new PriceList(4, 4.5, 2);
+        IceCreamSeller iceCreamSalon = new IceCreamSalon(priceList);
+        Cone.Flavor[] flavor = {Cone.Flavor.STRAWBERRY, Cone.Flavor.BANANA, Cone.Flavor.CHOCOLATE, Cone.Flavor.PISTACHE};
+        IceRocket iceRocket = iceCreamSalon.orderIceRocket();
+        Magnum magnum = iceCreamSalon.orderMagnum(Magnum.MagnumType.ROMANTICSTRAWBERRIES);
+        Cone cone = iceCreamSalon.orderCone(flavor);
+        Eatable[] eatables = {iceRocket, magnum, cone};
+        for (int i = 0; i < eatables.length; i++){
+            eatables[i].eat();
+        }
+        System.out.println(iceCreamSalon.toString());
     }
 }
