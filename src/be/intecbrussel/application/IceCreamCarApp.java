@@ -10,7 +10,7 @@ public class IceCreamCarApp{
     public static void main(String[] args) {
         PriceList priceList = new PriceList(4, 4.5, 2);
         Stock stock = new Stock(2, 2, 4, 1);
-        IceCreamCar iceCreamCar = new IceCreamCar(priceList, stock);
+        IceCreamSeller iceCreamCar = new IceCreamCar(priceList, stock);
         Cone.Flavor[] flavor = {Cone.Flavor.STRAWBERRY, Cone.Flavor.BANANA, Cone.Flavor.CHOCOLATE, Cone.Flavor.PISTACHE};
 
         IceRocket iceRocket = iceCreamCar.orderIceRocket();
